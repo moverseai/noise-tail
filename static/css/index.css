@@ -172,15 +172,12 @@ body {
     width: 100%;
   }
   #interpolation-image-wrapper img {
-    border-radius: 5px;
+    border-radius: 1px;
   }
 
 table {
     border-collapse: separate;
-    border-spacing: 5em;
-  }
-
-  .center {
+    border-spacing: 10em;
     margin-left:auto; 
     margin-right:auto;
   }

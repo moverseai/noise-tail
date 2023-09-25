@@ -310,12 +310,11 @@
         <h3 class="title is-3">Combining Oversampling and Relevance</h3>
         <div class="content has-text-justified">
           <p>
-            Tail poses are hard to reconstruct accurately. We exploit this bias in 
-            pose reconstructability and transform it to a confidence value through
-            a relevance function. From the investigated functions we opt for the
-            exponential one - normalized by a scaling factor σ - which assigns higher penalties to the worst reconstracted
-            poses. We use turbo colorization to color-code the assigned penalty (weight)
-            as you can see below. The depicted samples belong to the AMASS dataset [1].
+            We train our real-time MoCap model by balancing the biased data distribution with
+            a combination of oversampling through synthesis and re-weighting relevance based on sample rarity.
+            Our convolutional model is able to estimate 3D landmarks through learning to solve a 2D task, exploiting
+            the maturity of structured heatmap representations. The estimated markers and joints are used as input to
+            our robust solver.
           </p>
         </div>
         <div class="container has-text-centered is-max-desktop">    
@@ -329,34 +328,41 @@
 
 <!-- Slider Animation. -->
 <section class="section">
-  <div class="container is-centered has-text-centered is-max-desktop">
-    <h3 class="title is-3">Noise-aware Solving</h3>
-    <div class="content has-text-justified">
-      <p>
-        Tail poses are hard to reconstruct accurately. We exploit this bias in 
-        pose reconstructability and transform it to a confidence value through
-        a relevance function. From the investigated functions we opt for the
-        exponential one - normalized by a scaling factor σ - which assigns higher penalties to the worst reconstracted
-        poses. We use turbo colorization to color-code the assigned penalty (weight)
-        as you can see below. The depicted samples belong to the AMASS dataset [1].
-      </p>
+  <div class="container is-centered is-max-desktop">
+    <div class="column is-centered has-text-centered">
+      <h3 class="title is-3">Noise-aware Solving</h3>
+      <div class="content has-text-justified">
+        <p>
+          Instead of labeling the 3D landmark positions as in SOMA [2], our solver fits a parametric model (we use SMPL [3]) 
+          to the esimated (thourgh regression) values to obtain the articulated skeleton and the mesh surface of the input sample.
+          Our solver assumes noisy input from off-the-self sensors and is trained with an adaptive noise-aware fitting objective.
+          Compared to existing solutions like MoSh [4], our method is more robust to in-the-wild captures
+          by affordable sensors.
+        </p>
+      </div>
+      <table>
+        <td>
+          <h3 class="title is-4">Regression vs. Labeling</h3>
+          <div class="b-dics" style="width: 300px">
+            <img src="./static/images/solving/ours.png" alt="Ours">
+            <img src="./static/images/solving/soma.png" alt="SOMA">
+          </div>
+        </td>
+        <td>
+          <h3 class="title is-4"> Noise-aware vs. Plain Fitting</h3>
+          <div class="b-dics" style="width: 240px">
+            <img src="./static/images/solving/uncertainty.png" alt="Ours">
+            <img src="./static/images/solving/mosh.png" alt="MoSh">
+          </div>
+        </td>     
+      </table>
+      <div class="content has-text-justified">
+        <p>
+          Left: Fits to our regressed (purple) vs SOMA labeled (orange) markers, compared with ground truth meshes (gray). Right: Our noise-aware
+          approach vs. MoSh Euclidean distance from the ground truth mesh (colorized with 'jet' colormap).
+        </p>
+      </div>
     </div>
-    <table class="center">
-      <td>
-        <h3 class="title is-4">Labeled vs. Unlabeled</h3>
-        <div class="b-dics" style="width: 300px">
-          <img src="./static/images/solving/ours.png" alt="Ours">
-          <img src="./static/images/solving/soma.png" alt="SOMA">
-        </div>
-      </td>
-      <td>
-        <h3 class="title is-4"> Noise-aware Fitting</h3>
-        <div class="b-dics" style="width: 240px">
-          <img src="./static/images/solving/uncertainty.png" alt="Ours">
-          <img src="./static/images/solving/mosh.png" alt="MoSh">
-        </div>
-      </td>     
-    </table>
   </div>
 </section>
 <!--/ Slider Animation. -->
@@ -373,7 +379,10 @@
         [2] <a href="https://soma.is.tue.mpg.de/">SOMA</a>: Solving optical marker-based mocap automatically.
       </p>
       <p>
-        [3] <a href="https://files.is.tue.mpg.de/black/papers/MoSh.pdf">MoSh</a>: Motion and shape capture from sparse markers.
+        [3] <a href="https://smpl.is.tue.mpg.de/">SMPL</a>: A skinned multiperson linear model.
+      </p>
+      <p>
+        [4] <a href="https://files.is.tue.mpg.de/black/papers/MoSh.pdf">MoSh</a>: Motion and shape capture from sparse markers.
       </p>
     </div>
   </div>
