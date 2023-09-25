@@ -174,3 +174,8 @@ body {
   #interpolation-image-wrapper img {
     border-radius: 5px;
   }
+
+table.center {
+  margin-left:auto; 
+  margin-right:auto;
+}
