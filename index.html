@@ -41,6 +41,8 @@
 
   <link rel="stylesheet" href="./static/css/dics.css">
   <script src="./static/js/dics.js"></script>
+  <link rel="stylesheet" href="./static/css/BeerSlider.css"/>
+  <script src="./static/js/BeerSlider.js"></script>
 </head>
 <body>
 
@@ -340,21 +342,37 @@
           by affordable sensors.
         </p>
       </div>
-      <table>
-        <td>
-          <h3 class="title is-4">Regression vs. Labeling</h3>
-          <div class="b-dics" style="width: 300px">
-            <img src="./static/images/solving/ours.png" alt="Ours">
-            <img src="./static/images/solving/soma.png" alt="SOMA">
-          </div>
-        </td>
-        <td>
-          <h3 class="title is-4"> Noise-aware vs. Plain Fitting</h3>
-          <div class="b-dics" style="width: 240px">
-            <img src="./static/images/solving/uncertainty.png" alt="Ours">
-            <img src="./static/images/solving/mosh.png" alt="MoSh">
-          </div>
-        </td>     
+      <table style="margin-left: auto;margin-right: auto;">
+        <tr>
+          <th style="text-align: center; font-size:100%">
+              Regression vs. Labeling
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <div id="beer-slider" class="beer-slider beer-ready" data-beer-label="Ours" data-beer-start="40">
+              <img src="./static/images/solving/ours.png" style="width: 300px">
+              <div class="beer-reveal" data-beer-label="SOMA">
+                <img src="./static/images/solving/soma.png" style="width: 300px">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th style="text-align: center; font-size:100%">
+              Noise-aware vs. Plain Fitting
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <div id="beer-slider" class="beer-slider beer-ready" data-beer-label="Ours" data-beer-start="40">
+              <img src="./static/images/solving/uncertainty.png">
+              <div class="beer-reveal" data-beer-label="MoSh">
+                <img src="./static/images/solving/mosh.png">
+              </div>
+            </div>
+          </td>
+        </tr>
       </table>
       <div class="content has-text-justified">
         <p>
@@ -424,6 +442,19 @@
     </div>
   </div>
 </footer>
+
+<script>
+  $.fn.BeerSlider = function ( options ) {
+    options = options || {};
+    return this.each(function() {
+      new BeerSlider(this, options);
+      
+    });
+  };
+  $('.beer-slider').each( (function( index, el ) {
+    $(el).BeerSlider({start: $(el).data('beer-start')})
+  }));
+</script>
 
 </body>
 </html>
